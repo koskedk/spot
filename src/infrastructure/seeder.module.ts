@@ -1,12 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SeedReader } from './common/seed-reader';
-import { LocationSeeder } from './locations/location.seeder';
-import { PracticeSeeder } from './practices/practice.seeder';
-import { AgencyRepository } from './practices/agency.repository';
-import { LocationRepository } from './locations/location.repository';
-import { agencySchema } from '../core/application/practices/schemas/agency-schema';
-import { countySchema } from '../core/application/locations/schemas/county-schema';
 import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
@@ -15,7 +9,7 @@ import { CqrsModule } from '@nestjs/cqrs';
     MongooseModule.forFeature([{ name: 'County', schema: countySchema }]),
   ],
   providers: [
-    SeedReader, PracticeSeeder, AgencyRepository, LocationSeeder, LocationRepository,
+    SeedReader,
   ],
 })
 export class SeederModule {

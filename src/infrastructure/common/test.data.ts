@@ -1,18 +1,10 @@
-import { Agency } from '../../core/domain/practices/agency';
-import { County } from '../../core/domain/locations/county';
+import { Docket } from '../../core/domain/depots/docket';
 
-export const getTestCounties = (count = 2) => {
-  const cars: County[] = [];
+export const getTestDockets = (count = 2) => {
+  const cars: Docket[] = [];
   for (let i = 0; i < count; i++) {
-    cars.push(new County(i, `county${i}`));
+    cars.push(new Docket(`id${i}`, `county${i}`));
   }
   return cars;
 };
 
-export const getTestAgencies = (count = 2) => {
-  const cars: Agency[] = [];
-  for (let i = 0; i < count; i++) {
-    cars.push(new Agency(`agency${i}`, `id${i}`));
-  }
-  return cars;
-};
