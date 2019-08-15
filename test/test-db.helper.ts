@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose';
 
 export class TestDbHelper {
   const;
-  useLocal = false;
+  useLocal = true;
   url = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiStatsTest?retryWrites=true&w=majority`;
   localUrl = `mongodb://localhost/dwapiStatsTest`;
 

@@ -3,14 +3,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TestDbHelper } from '../../../test/test-db.helper';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DocketRepository } from './docket.repository';
-import { docketSchema } from './schemas/docket.schema';
-import { Docket } from '../../domain/courts/docket';
 import { getTestDockets } from '../../../test/test.data';
 import { IDocketRepository } from '../../domain/courts/docket-repository.interface';
+import { CourtsInfrastructureModule } from './courts-infrastructure.module';
 
 describe('Docket Repository  Tests', () => {
   let module: TestingModule;
-  let repository: DocketRepository;
+  let repository: IDocketRepository;
   const dbHelper = new TestDbHelper();
   const testDockets = getTestDockets();
 
@@ -18,14 +17,13 @@ describe('Docket Repository  Tests', () => {
     module = await Test.createTestingModule({
       imports: [
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
-        MongooseModule.forFeature([{ name: Docket.name, schema: docketSchema }]),
+        CourtsInfrastructureModule,
       ],
-      providers: [DocketRepository],
     }).compile();
 
     await dbHelper.initConnection();
     await dbHelper.seedDb('dockets', testDockets);
-    repository = module.get<DocketRepository>(DocketRepository);
+    repository = module.get<IDocketRepository>('IDocketRepository');
   });
 
   afterAll(async () => {

@@ -4,11 +4,10 @@ import { TestDbHelper } from '../../../test/test-db.helper';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SeederModule } from './seeder.module';
 import { MasterFacilitySeeder } from './master-facility.seeder';
-import { DocketSeeder } from './docket.seeder';
 
-describe('Dockets Seeder Tests', () => {
+describe('Master Facility Seeder Tests', () => {
   let module: TestingModule;
-  let seeder: DocketSeeder;
+  let seeder: MasterFacilitySeeder;
   const dbHelper = new TestDbHelper();
 
   beforeAll(async () => {
@@ -20,7 +19,7 @@ describe('Dockets Seeder Tests', () => {
     }).compile();
 
     await dbHelper.initConnection();
-    seeder = module.get<DocketSeeder>(DocketSeeder);
+    seeder = module.get<MasterFacilitySeeder>(MasterFacilitySeeder);
   });
 
   afterAll(async () => {
