@@ -11,7 +11,7 @@ const localUrl = 'mongodb://localhost/dwapiStats';
 @Module({
   imports: [
     CqrsModule,
-    MongooseModule.forRoot(cloudUrl, {
+    MongooseModule.forRoot(localUrl, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useCreateIndex: true,

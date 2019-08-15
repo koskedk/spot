@@ -11,4 +11,11 @@ export class MasterFacility extends AggregateRoot {
   ) {
     super();
   }
+
+  changeDetails(code: number, name: any, county?: any, mechanism?: any) {
+    this.code = code;
+    this.name = name;
+    this.county = county;
+    this.mechanism = mechanism;
+  }
 }
