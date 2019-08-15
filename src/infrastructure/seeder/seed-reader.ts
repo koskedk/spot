@@ -1,6 +1,6 @@
 import * as fg from 'fast-glob';
 import * as fs from 'fs';
-import { ISeedReader } from '../../core/application/common/seeder-reader.interface';
+import { ISeedReader } from '../../application/common/seeder-reader.interface';
 import { Logger } from '@nestjs/common';
 
 export class SeedReader implements ISeedReader {

@@ -2,10 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { InjectModel, MongooseModule } from '@nestjs/mongoose';
-import { IRepository } from '../../core/application/common/repository.interface';
+import { IRepository } from '../../application/common/repository.interface';
 import { BaseRepository } from './base.repository';
-import { Model } from 'mongoose';
-import { TestDbHelper } from './test-db.helper';
+import { Model, Schema } from 'mongoose';
+import { TestDbHelper } from '../../../test/test-db.helper';
 import * as uuid from 'uuid';
 
 describe('Base Repository Tests', () => {
@@ -60,15 +60,15 @@ describe('Base Repository Tests', () => {
     liveCar.changeName('xyz');
     const result = await repository.update(liveCar);
 
-    const updated = await repository.getAll({ id: liveCar.id });
-    expect(updated.length).toBe(1);
-    expect(updated[0].name).toBe('xyz');
-    expect(updated[0].id).toBe(liveCar.id);
+    const updated = await repository.get(liveCar._id);
+    expect(updated).not.toBeNull();
+    expect(updated.name).toBe('xyz');
+    expect(updated._id).toBe(liveCar._id);
     Logger.debug(updated);
   });
 
   it('should get Entity by Id', async () => {
-    const car = await repository.get(liveCar.id);
+    const car = await repository.get(liveCar._id);
     expect(car).not.toBeNull();
     Logger.debug(car);
   });
@@ -86,7 +86,7 @@ describe('Base Repository Tests', () => {
   });
 
   it('should delete Entity by Id', async () => {
-    const result = await repository.delete(liveCar.id);
+    const result = await repository.delete(liveCar._id);
     expect(result).toBe(true);
   });
 
@@ -99,10 +99,10 @@ describe('Base Repository Tests', () => {
 });
 
 class Car {
-  public id: string;
+  public _id: string;
 
   constructor(public name: string) {
-    this.id = uuid();
+    this._id = uuid();
   }
 
   changeName(newName) {
@@ -112,11 +112,11 @@ class Car {
 
 interface CarDto {
   name: string;
-  id: string;
+  _id: string;
 }
 
 const carSchema = new mongoose.Schema({
-  id: String,
+  _id: String,
   name: String,
 });
 

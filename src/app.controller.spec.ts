@@ -1,26 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { MongooseModule } from '@nestjs/mongoose';
+import { TestDbHelper } from '../test/test-db.helper';
+import { AppModule } from './app.module';
 
 describe('AppController', () => {
-  const url = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiGlobeTest?retryWrites=true&w=majority`;
+
   let module: TestingModule;
   let appController: AppController;
+  const dbHelper = new TestDbHelper();
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     module = await Test.createTestingModule({
       imports: [
-        MongooseModule.forRoot(url, { useNewUrlParser: true }),
+        MongooseModule.forRoot(dbHelper.url, dbHelper.options),
+        AppModule,
       ],
-      controllers: [AppController],
     }).compile();
-
+    await dbHelper.initConnection();
     appController = module.get<AppController>(AppController);
   });
 
+  afterAll(async () => {
+    await dbHelper.clearDb();
+    await dbHelper.closeConnection();
+  });
+
   describe('root', () => {
-    it('should return "dwapi Spot"', () => {
-      expect(appController.getAppName()).toBe('dwapi Spot');
+    it('should return "dwapi Stats"', () => {
+      expect(appController.getAppName()).toBe('dwapi Stats');
     });
   });
 });

@@ -1,10 +1,10 @@
 import { Model } from 'mongoose';
-import { IRepository } from '../../core/application/common/repository.interface';
+import { IRepository } from '../../application/common/repository.interface';
 
 export abstract class BaseRepository<T> implements IRepository<T> {
 
   protected constructor(
-    private readonly model: Model<T>,
+    protected readonly model: Model<T>,
   ) {
   }
 
@@ -19,13 +19,15 @@ export abstract class BaseRepository<T> implements IRepository<T> {
   }
 
   async update(entity: any): Promise<T> {
+    const id = entity._id;
     delete entity._id;
-    await this.model.updateOne({ id: entity.id }, entity);
+    const result = await this.model.updateOne({ _id: id }, entity);
+    entity._id = id;
     return entity;
   }
 
   async get(tid: any): Promise<T> {
-    const result = await this.model.findOne({ id: tid }).exec();
+    const result = await this.model.findById(tid).exec();
     return result.toObject();
   }
 
@@ -38,7 +40,7 @@ export abstract class BaseRepository<T> implements IRepository<T> {
   }
 
   async delete(tid: any) {
-    await this.model.deleteOne({ id: tid }).exec();
+    await this.model.deleteOne({ _id: tid }).exec();
     return true;
   }
 

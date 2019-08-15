@@ -2,8 +2,10 @@ import { Logger } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 
 export class TestDbHelper {
-
-  url = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiGlobeTest?retryWrites=true&w=majority`;
+  const;
+  useLocal = false;
+  url = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiStatsTest?retryWrites=true&w=majority`;
+  localUrl = `mongodb://localhost/dwapiStatsTest`;
 
   options = {
     useNewUrlParser: true,
@@ -19,6 +21,9 @@ export class TestDbHelper {
       this.options = opts;
     }
     jest.setTimeout(30000);
+    if (this.useLocal) {
+      this.url = this.localUrl;
+    }
   }
 
   async initConnection(dbname?: string) {
@@ -60,7 +65,7 @@ export class TestDbHelper {
 
   async closeConnection() {
     Logger.debug(`closing connection...`);
-    mongoose.connection.close();
+    // mongoose.connection.close();
     Logger.debug(`connection closed`);
   }
 }

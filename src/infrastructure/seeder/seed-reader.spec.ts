@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SeedReader } from './seed-reader';
+import uuid = require('uuid');
 
 describe('Seed Reader Tests', () => {
   let module: TestingModule;
@@ -13,7 +14,7 @@ describe('Seed Reader Tests', () => {
     seedReader = module.get<SeedReader>(SeedReader);
   });
 
-  it('should get Seed files', async () => {
+  it('should read Seed files', async () => {
     const files = await seedReader.getFiles();
     expect(files.length).toBeGreaterThan(0);
     files.forEach(f => Logger.debug(`${f}`));
