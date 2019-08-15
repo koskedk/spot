@@ -19,9 +19,10 @@ import { RefreshFacilitiesHandler } from './commands/handlers/refresh-facilities
   imports: [
     CqrsModule,
     ClientsModule.register([{
-      name: 'GLOBE_SERVICE', transport: Transport.TCP, options: {
-        host: '127.0.0.1',
-        port: 4701,
+      name: 'GLOBE_SERVICE',
+      transport: Transport.REDIS,
+      options: {
+        url: 'redis://localhost:6379',
       },
     }]),
     RegistriesInfrastructureModule,

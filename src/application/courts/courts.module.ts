@@ -8,10 +8,18 @@ import { DocketCreatedEventHandler } from './events/handlers/docket-created.hand
 import { DocketDeletedEventHandler } from './events/handlers/docket-deleted.handler';
 import { DocketUpdatedEventHandler } from './events/handlers/docket-updated.handler';
 import { CourtsInfrastructureModule } from '../../infrastructure/courts/courts-infrastructure.module';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
     CqrsModule,
+    ClientsModule.register([{
+      name: 'GLOBE_SERVICE',
+      transport: Transport.REDIS,
+      options: {
+        url: 'redis://localhost:6379',
+      },
+    }]),
     CourtsInfrastructureModule,
   ],
   controllers: [DocketsController],

@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetMasterFacilitiesQuery } from '../queries/get-master-facilities.query';
 import { MasterFacilityDto } from '../../../domain/registries/dtos/master-facility.dto';
 import { SaveMasterFacilityCommand } from '../commands/save-master-facility.command';
 import { DeleteMasterFacilityCommand } from '../commands/delete-master-facility.command';
+import { EventPattern } from '@nestjs/microservices';
 
 @Controller('masterfacilities')
 export class MasterFacilitiesController {
@@ -32,4 +33,15 @@ export class MasterFacilitiesController {
     );
   }
 
+  @EventPattern('AgencyCreatedEvent')
+  async handleAgencyCreated(data: any) {
+    Logger.log('Recieved New');
+    Logger.log(data);
+  }
+
+  @EventPattern('AgencyUpdatedEvent')
+  async handleAgencyUpdated(data: any) {
+    Logger.log('Recieved Updates');
+    Logger.log(data);
+  }
 }

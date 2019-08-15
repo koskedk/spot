@@ -6,9 +6,9 @@ import { Transport } from '@nestjs/microservices';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const microservice = app.connectMicroservice({
-    transport: Transport.TCP,
+    transport: Transport.REDIS,
     options: {
-      port: 4702,
+      url: 'redis://localhost:6379',
     },
   });
   app.enableCors();
