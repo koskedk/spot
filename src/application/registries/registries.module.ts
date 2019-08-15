@@ -1,20 +1,29 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { MasterFacilitiesController } from './controllers/dockets.controller';
-import { SaveMasterFacilityHandler } from './commands/handlers/save-docket.handler';
-import { DeleteMasterFacilityHandler } from './commands/handlers/delete-docket.handler';
-import { DocketCreatedEventHandler } from './events/handlers/docket-created.handler';
-import { DocketDeletedEventHandler } from './events/handlers/docket-deleted.handler';
-import { DocketUpdatedEventHandler } from './events/handlers/docket-updated.handler';
 import { CourtsInfrastructureModule } from '../../infrastructure/courts/courts-infrastructure.module';
 import { RegistriesInfrastructureModule } from '../../infrastructure/registries/registries-infrastructure.module';
 import { TransfersInfrastructureModule } from '../../infrastructure/transfers/transfers-infrastructure.module';
 import { GetMasterFacilitiesHandler } from './queries/handlers/get-master-facilities.handler';
 import { GetDocketsHandler } from '../courts/queries/handlers/get-dockets.handler';
+import { MasterFacilitiesController } from './controllers/master-facilities.controller';
+import { SaveMasterFacilityHandler } from './commands/handlers/save-master-facility.handler';
+import { DeleteMasterFacilityHandler } from './commands/handlers/delete-master-facility.handler';
+import { MasterFacilityCreatedHandler } from './events/handlers/master-facility-created.handler';
+import { MasterFacilityDeletedEvent } from './events/master-facility-deleted.event';
+import { MasterFacilityDeletedHandler } from './events/handlers/master-facility-deleted.handler';
+import { MasterFacilityUpdatedHandler } from './events/handlers/master-facility-updated.handler';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RefreshFacilitiesHandler } from './commands/handlers/refresh-facilities.handler';
 
 @Module({
   imports: [
     CqrsModule,
+    ClientsModule.register([{
+      name: 'GLOBE_SERVICE', transport: Transport.TCP, options: {
+        host: '127.0.0.1',
+        port: 4701,
+      },
+    }]),
     RegistriesInfrastructureModule,
     TransfersInfrastructureModule,
     CourtsInfrastructureModule,
@@ -23,7 +32,8 @@ import { GetDocketsHandler } from '../courts/queries/handlers/get-dockets.handle
   providers: [
     SaveMasterFacilityHandler, DeleteMasterFacilityHandler,
     GetMasterFacilitiesHandler, GetDocketsHandler,
-    DocketCreatedEventHandler, DocketDeletedEventHandler, DocketUpdatedEventHandler],
+    MasterFacilityCreatedHandler, MasterFacilityDeletedHandler, MasterFacilityUpdatedHandler,
+    RefreshFacilitiesHandler],
 })
 export class RegistriesModule {
 

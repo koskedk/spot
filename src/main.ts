@@ -7,10 +7,14 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const microservice = app.connectMicroservice({
     transport: Transport.TCP,
+    options: {
+      port: 4702,
+    },
   });
   app.enableCors();
   const seeder = app.get(SeederModule);
   await seeder.seedData();
+  await app.startAllMicroservicesAsync();
   await app.listen(3002);
 }
 

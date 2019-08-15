@@ -3,7 +3,7 @@ import { Logger } from '@nestjs/common';
 import { MasterFacilityUpdatedEvent } from '../master-facility-updated.event';
 
 @EventsHandler(MasterFacilityUpdatedEvent)
-export class DocketUpdatedEventHandler implements IEventHandler<MasterFacilityUpdatedEvent> {
+export class MasterFacilityUpdatedHandler implements IEventHandler<MasterFacilityUpdatedEvent> {
   handle(event: MasterFacilityUpdatedEvent): any {
     Logger.debug(`=== MasterFacilityUpdated ===:${event._id}`);
   }
