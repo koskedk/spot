@@ -1,6 +1,6 @@
 ## Description
 
-dwapi-globe
+dwapi-stats
 
 ## Installation
 
