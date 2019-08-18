@@ -53,3 +53,85 @@ const getSummaries = (count = 2) => {
   }
   return data;
 };
+
+export const getTestStatsData = () => {
+  const dockets = JSON.parse(
+    '[\n' +
+      '  {\n' +
+      '    "_id": "6dc92fe4-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '    "name": "DWH",\n' +
+      '    "display": "DWH",\n' +
+      '    "extracts": [\n' +
+      '      {\n' +
+      '        "_id": "6dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "Patient",\n' +
+      '        "display": "All Patients"\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "Visits",\n' +
+      '        "display": "Visits"\n' +
+      '      }\n' +
+      '    ]\n' +
+      '  },\n' +
+      '  {\n' +
+      '    "_id": "6dc93278-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '    "name": "HTS",\n' +
+      '    "display": "HTS",\n' +
+      '    "extracts": [\n' +
+      '      {\n' +
+      '        "_id": "6dc93890-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "Clients",\n' +
+      '        "display": "HTS Clients"\n' +
+      '      },\n' +
+      '      {\n' +
+      '        "_id": "6dc939bc-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '        "name": "HtsTests",\n' +
+      '        "display": "Client Tests"\n' +
+      '      }\n' +
+      '    ]\n' +
+      '  }\n' +
+      ']\n',
+  );
+
+  const masterfacilities = JSON.parse(
+    '[\n' +
+      '  {\n' +
+      '    "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '    "code": 12618,\n' +
+      '    "name": "Mwala Hospital",\n' +
+      '    "county": {\n' +
+      '      "_id": "9eb15a92-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '      "code": 16,\n' +
+      '      "name": "MACHAKOS"\n' +
+      '    },\n' +
+      '    "mechanism": {\n' +
+      '      "_id": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '      "code": "18504",\n' +
+      '      "name": "UMB Timiza",\n' +
+      '      "implementationName": "UMB Timiza",\n' +
+      '      "agency": "9eb13e4a-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
+      '    }\n' +
+      '  },\n' +
+      '  {\n' +
+      '    "_id": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '    "code": 14950,\n' +
+      '    "name": "Kitengela Health Centre",\n' +
+      '    "county": {\n' +
+      '      "_id": "9eb175a4-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '      "code": 34,\n' +
+      '      "name": "KAJIADO"\n' +
+      '    },\n' +
+      '    "mechanism": {\n' +
+      '      "_id": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4",\n' +
+      '      "code": "13588",\n' +
+      '      "name": "Afya Ziwani",\n' +
+      '      "implementationName": "Afya Ziwani",\n' +
+      '      "agency": "9eb140ca-bb7b-11e9-9cb5-2a2ae2dbcce4"\n' +
+      '    }\n' +
+      '  }\n' +
+      ']\n',
+  );
+
+  return { dockets, masterfacilities };
+};

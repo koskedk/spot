@@ -10,8 +10,8 @@ describe('Facility Repository  Tests', () => {
   let module: TestingModule;
   let repository: IFacilityRepository;
   const dbHelper = new TestDbHelper();
-  const testFacilities = getTestFacilities();
-
+  const { facilities } = getTestFacilities();
+  const testFacilities = facilities;
   beforeAll(async () => {
     module = await Test.createTestingModule({
       imports: [
