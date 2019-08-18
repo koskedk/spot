@@ -7,5 +7,6 @@ export const manifestSchema = new mongoose.Schema({
   logDate: Date,
   buildDate: Date,
   docket: String,
+  patientCount: Number,
   cargo: [Schema.Types.Mixed],
 });

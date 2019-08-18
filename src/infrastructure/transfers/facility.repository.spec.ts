@@ -14,7 +14,8 @@ describe('Facility Repository  Tests', () => {
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
-      imports: [TransfersInfrastructureModule,
+      imports: [
+        TransfersInfrastructureModule,
         MongooseModule.forRoot(dbHelper.url, dbHelper.options),
       ],
     }).compile();
@@ -36,7 +37,19 @@ describe('Facility Repository  Tests', () => {
   it('should load Facilities', async () => {
     const facilities = await repository.getAll();
     expect(facilities.length).toBeGreaterThan(0);
-    facilities.forEach(d => Logger.debug(`${d.name}`),
+    facilities.forEach(d => Logger.debug(`${d.name}`));
+  });
+
+  it('should load By Facility Code', async () => {
+    const facility = await repository.findByCode(testFacilities[0].code);
+    expect(facility).not.toBeNull();
+    Logger.log(facility);
+  });
+
+  it('should check if manifests exisits', async () => {
+    const result = await repository.manifestExists(
+      testFacilities[0].manifests[0].mId,
     );
+    expect(result).toBe(true);
   });
 });

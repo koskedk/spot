@@ -8,6 +8,7 @@ export class Manifest {
     public logDate: Date,
     public buildDate: Date,
     public docket: string,
+    public patientCount: number,
     public cargo: any,
   ) {
     this._id = uuid.v1();
