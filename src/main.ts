@@ -6,9 +6,11 @@ import { Transport } from '@nestjs/microservices';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const microservice = app.connectMicroservice({
-    transport: Transport.REDIS,
+    transport: Transport.RMQ,
     options: {
-      url: 'redis://localhost:6379',
+      urls: [`amqp://192.168.100.3:5672/spot`],
+      queue: 'stats_queue',
+      queueOptions: { durable: true },
     },
   });
   app.enableCors();

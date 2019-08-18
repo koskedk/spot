@@ -2,11 +2,7 @@ import { Model } from 'mongoose';
 import { IRepository } from '../../application/common/repository.interface';
 
 export abstract class BaseRepository<T> implements IRepository<T> {
-
-  protected constructor(
-    protected readonly model: Model<T>,
-  ) {
-  }
+  protected constructor(protected readonly model: Model<T>) {}
 
   create(entity: any): Promise<T> {
     const newModel = new this.model(entity);
@@ -32,7 +28,6 @@ export abstract class BaseRepository<T> implements IRepository<T> {
   }
 
   async getAll(criteria?: any): Promise<T[]> {
-
     if (criteria) {
       return this.model.find(criteria).exec();
     }
@@ -52,4 +47,18 @@ export abstract class BaseRepository<T> implements IRepository<T> {
     return this.model;
   }
 
+  async createOrUpdate(entity: any): Promise<T> {
+    if (await this.exists(entity._id)) {
+      return this.update(entity);
+    }
+    return this.create(entity);
+  }
+
+  async exists(tid): Promise<boolean> {
+    const result = await this.model.findById(tid).exec();
+    if (result) {
+      return true;
+    }
+    return false;
+  }
 }

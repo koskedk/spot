@@ -13,13 +13,16 @@ const localUrl = 'mongodb://localhost/dwapiStats';
 @Module({
   imports: [
     CqrsModule,
-    MongooseModule.forRoot(localUrl, {
+    MongooseModule.forRoot(cloudUrl, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useCreateIndex: true,
-    }), CourtsModule, RegistriesModule, SeederModule],
+    }),
+    CourtsModule,
+    RegistriesModule,
+    SeederModule,
+  ],
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {
-}
+export class AppModule {}

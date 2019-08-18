@@ -32,11 +32,15 @@ describe('Practices Controller Tests', () => {
     await dbHelper.initConnection();
     await dbHelper.seedDb('masterfacilities', testMasterFacilities);
 
-    const saveMasterFacilityHandler = module.get<SaveMasterFacilityHandler>(SaveMasterFacilityHandler);
+    const saveMasterFacilityHandler = module.get<SaveMasterFacilityHandler>(
+      SaveMasterFacilityHandler,
+    );
     const commandBus = module.get<CommandBus>(CommandBus);
     commandBus.bind(saveMasterFacilityHandler, SaveMasterFacilityCommand.name);
 
-    const getMasterFacilitiesHandler = module.get<GetMasterFacilitiesHandler>(GetMasterFacilitiesHandler);
+    const getMasterFacilitiesHandler = module.get<GetMasterFacilitiesHandler>(
+      GetMasterFacilitiesHandler,
+    );
     const queryBus = module.get<QueryBus>(QueryBus);
     queryBus.bind(getMasterFacilitiesHandler, GetMasterFacilitiesQuery.name);
 
@@ -49,7 +53,7 @@ describe('Practices Controller Tests', () => {
   });
 
   it('should create MasterFacility', async () => {
-    const command = { _id: uuid.v1(), code: 233, name: 'Demo' };
+    const command = { code: 233, name: 'Demo' };
     const result = await controller.createOrUpdateMasterFacility(command);
     expect(result).not.toBeNull();
     Logger.debug(result);

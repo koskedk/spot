@@ -1,7 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
+import * as uuid from 'uuid';
 
 export class MasterFacility extends AggregateRoot {
-
   constructor(
     public _id: string,
     public code: number,

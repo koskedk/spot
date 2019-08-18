@@ -13,21 +13,27 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 @Module({
   imports: [
     CqrsModule,
-    ClientsModule.register([{
-      name: 'GLOBE_SERVICE',
-      transport: Transport.REDIS,
-      options: {
-        url: 'redis://localhost:6379',
+    ClientsModule.register([
+      {
+        name: 'GLOBE_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: [`amqp://192.168.100.3:5672`],
+          queue: 'cats_queue',
+          queueOptions: { durable: true },
+        },
       },
-    }]),
+    ]),
     CourtsInfrastructureModule,
   ],
   controllers: [DocketsController],
   providers: [
-    SaveDocketHandler, DeleteDocketHandler,
+    SaveDocketHandler,
+    DeleteDocketHandler,
     GetDocketsHandler,
-    DocketCreatedEventHandler, DocketDeletedEventHandler, DocketUpdatedEventHandler],
+    DocketCreatedEventHandler,
+    DocketDeletedEventHandler,
+    DocketUpdatedEventHandler,
+  ],
 })
-export class CourtsModule {
-
-}
+export class CourtsModule {}

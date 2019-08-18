@@ -11,12 +11,12 @@ import { SaveMasterFacilityHandler } from './save-master-facility.handler';
 import { SaveMasterFacilityCommand } from '../save-master-facility.command';
 import * as uuid from 'uuid';
 
-describe('Save Docket Command Tests', () => {
+describe('Save Master Facility Command Tests', () => {
   let module: TestingModule;
   let commandBus: CommandBus;
   let testMasterFacilities: MasterFacility[] = [];
   const dbHelper = new TestDbHelper();
-  let liveDocket: Docket;
+  let liveMasterFacility: MasterFacility;
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
@@ -29,7 +29,9 @@ describe('Save Docket Command Tests', () => {
     await dbHelper.initConnection();
     await dbHelper.seedDb('masterfacilities', testMasterFacilities);
 
-    const saveDocketHandler = module.get<SaveMasterFacilityHandler>(SaveMasterFacilityHandler);
+    const saveDocketHandler = module.get<SaveMasterFacilityHandler>(
+      SaveMasterFacilityHandler,
+    );
 
     commandBus = module.get<CommandBus>(CommandBus);
     commandBus.bind(saveDocketHandler, SaveMasterFacilityCommand.name);
@@ -41,24 +43,27 @@ describe('Save Docket Command Tests', () => {
   });
 
   beforeEach(async () => {
-    liveDocket = new Docket('XXX', 'XXX-ZZX');
-    await dbHelper.seedDb('masterfacilities', [liveDocket]);
+    liveMasterFacility = new MasterFacility(uuid.v1(), 1111, 'XXX-ZZX');
+    await dbHelper.seedDb('masterfacilities', [liveMasterFacility]);
   });
 
-  it('should create Docket', async () => {
-    const command = new SaveMasterFacilityCommand(uuid.v1(), 3343, 'Demo');
+  it('should create Master Facility', async () => {
+    const command = new SaveMasterFacilityCommand(3343, 'Demo');
     const result = await commandBus.execute(command);
     expect(result).not.toBeNull();
     Logger.debug(result);
   });
 
-  it('should modify Docket', async () => {
-    const command = new SaveMasterFacilityCommand(liveDocket._id, 101, 'NewTest');
+  it('should modify Master Facility', async () => {
+    const command = new SaveMasterFacilityCommand(
+      101,
+      'NewTest',
+      liveMasterFacility._id,
+    );
     const result = await commandBus.execute(command);
     expect(result.code).toBe(101);
     expect(result.name).toBe('NewTest');
-    expect(result._id).toBe(liveDocket._id);
+    expect(result._id).toBe(liveMasterFacility._id);
     Logger.debug(result);
   });
-
 });

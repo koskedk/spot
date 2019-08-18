@@ -47,10 +47,7 @@ describe('Base Repository Tests', () => {
   });
 
   it('should create Batch entitie', async () => {
-    const cars: Car[] = [
-      new Car('Merc'),
-      new Car('Sub'),
-    ];
+    const cars: Car[] = [new Car('Merc'), new Car('Sub')];
     const result = await repository.createBatch(cars);
     expect(result).toBeGreaterThan(0);
     Logger.debug(`Created:${result}`);
@@ -59,6 +56,23 @@ describe('Base Repository Tests', () => {
   it('should update Entity', async () => {
     liveCar.changeName('xyz');
     const result = await repository.update(liveCar);
+
+    const updated = await repository.get(liveCar._id);
+    expect(updated).not.toBeNull();
+    expect(updated.name).toBe('xyz');
+    expect(updated._id).toBe(liveCar._id);
+    Logger.debug(updated);
+  });
+  it('should Create or Update where new', async () => {
+    const car = new Car('Toyota');
+    const result = await repository.createOrUpdate(car);
+    expect(result).not.toBeNull();
+    Logger.debug(result);
+  });
+
+  it('should Create or Update where updated', async () => {
+    liveCar.changeName('xyz');
+    const result = await repository.createOrUpdate(liveCar);
 
     const updated = await repository.get(liveCar._id);
     expect(updated).not.toBeNull();
@@ -95,7 +109,6 @@ describe('Base Repository Tests', () => {
     expect(result).toBeGreaterThan(0);
     Logger.debug(`Total:${result}`);
   });
-
 });
 
 class Car {
@@ -120,15 +133,15 @@ const carSchema = new mongoose.Schema({
   name: String,
 });
 
-interface ICarRepository extends IRepository<Car> {
-}
+interface ICarRepository extends IRepository<Car> {}
 
 // tslint:disable-next-line:max-classes-per-file
 @Injectable()
 class CarRepository extends BaseRepository<Car> implements ICarRepository {
   constructor(
     @InjectModel(Car.name)
-      model: Model<Car>) {
+    model: Model<Car>,
+  ) {
     super(model);
   }
 }
