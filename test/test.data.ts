@@ -46,11 +46,15 @@ const getManifests = (count = 2) => {
   }
   return data;
 };
-const getSummaries = (count = 2) => {
+const getSummaries = () => {
   const data: Summary[] = [];
-  for (let i = 0; i < count; i++) {
-    data.push(new Summary('HTS', 'Clients', i * 50, (i + 1) * 50, new Date()));
-  }
+
+  data.push(
+    new Summary({ name: 'HTS' }, { name: 'Clients' }, 100, 100, new Date()),
+  );
+  data.push(
+    new Summary({ name: 'HTS' }, { name: 'HtsTests' }, 200, 0, new Date()),
+  );
   return data;
 };
 
