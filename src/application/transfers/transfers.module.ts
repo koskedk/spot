@@ -5,7 +5,7 @@ import { TransfersInfrastructureModule } from '../../infrastructure/transfers';
 import { LogManifestCommand } from './commands/log-manifest.command';
 import { UpdateStatsHandler } from './commands/handlers/update-stats.handler';
 import { FacilityManifestSaga } from './sagas/facility-manifest.saga';
-import { ManifestController } from './controllers/manifest.controller';
+import { FacilityController } from './controllers/manifest.controller';
 import { AssignMasterFacilityHandler } from './commands/handlers/assign-master-facility.handler';
 import { InitializeSummariesHandler } from './commands/handlers/initialize-summaries.handler';
 import { LogManifestHandler } from './commands/handlers/log-manifest.handler';
@@ -41,7 +41,7 @@ const Sagas = [FacilityManifestSaga];
     RegistriesInfrastructureModule,
     CourtsInfrastructureModule,
   ],
-  controllers: [ManifestController],
+  controllers: [FacilityController],
   providers: [...CommandHandlers, ...QueryHandlers],
 })
 export class TransfersModule {}

@@ -9,8 +9,6 @@ import {
 } from '../../../../../test/test.data';
 import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
-import { GetStatsQuery } from '../get-stats.query';
-import { GetStatsHandler } from './get-stats.handler';
 import { GetSummaryHandler } from './get-summary.handler';
 import { GetSummaryQuery } from '../get-summary.query';
 
