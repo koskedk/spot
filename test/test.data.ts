@@ -41,7 +41,7 @@ const getManifests = (count = 2) => {
   const data: Manifest[] = [];
   for (let i = 0; i < count; i++) {
     data.push(
-      new Manifest(uuid.v1(), new Date(), new Date(), 'HTS', i * 45, ''),
+      new Manifest(uuid.v1(), new Date(), new Date(), 'HTS', (i + 1) * 45, ''),
     );
   }
   return data;
@@ -49,7 +49,7 @@ const getManifests = (count = 2) => {
 const getSummaries = (count = 2) => {
   const data: Summary[] = [];
   for (let i = 0; i < count; i++) {
-    data.push(new Summary('HTS', 'Clients', i * 50, i * 50, new Date()));
+    data.push(new Summary('HTS', 'Clients', i * 50, (i + 1) * 50, new Date()));
   }
   return data;
 };
@@ -65,12 +65,16 @@ export const getTestStatsData = () => {
       '      {\n' +
       '        "_id": "6dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "Patient",\n' +
-      '        "display": "All Patients"\n' +
+      '        "display": "All Patients",\n' +
+      '        "isPatient": true,\n' +
+      '        "rank": 1\n' +
       '      },\n' +
       '      {\n' +
       '        "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "Visits",\n' +
-      '        "display": "Visits"\n' +
+      '        "display": "Visits",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 2\n' +
       '      }\n' +
       '    ]\n' +
       '  },\n' +
@@ -82,12 +86,16 @@ export const getTestStatsData = () => {
       '      {\n' +
       '        "_id": "6dc93890-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "Clients",\n' +
-      '        "display": "HTS Clients"\n' +
+      '        "display": "HTS Clients",\n' +
+      '        "isPatient": true,\n' +
+      '        "rank": 1\n' +
       '      },\n' +
       '      {\n' +
       '        "_id": "6dc939bc-bf1e-11e9-9cb5-2a2ae2dbcce4",\n' +
       '        "name": "HtsTests",\n' +
-      '        "display": "Client Tests"\n' +
+      '        "display": "Client Tests",\n' +
+      '        "isPatient": false,\n' +
+      '        "rank": 2\n' +
       '      }\n' +
       '    ]\n' +
       '  }\n' +

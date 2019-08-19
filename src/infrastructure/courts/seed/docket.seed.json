@@ -7,12 +7,16 @@
       {
         "_id": "6dc933e0-bf1e-11e9-9cb5-2a2ae2dbcce4",
         "name": "Patient",
-        "display": "All Patients"
+        "display": "All Patients",
+        "isPatient": true,
+        "rank": 1
       },
       {
         "_id": "6dc93746-bf1e-11e9-9cb5-2a2ae2dbcce4",
         "name": "Visits",
-        "display": "Visits"
+        "display": "Visits",
+        "isPatient": false,
+        "rank": 2
       }
     ]
   },
@@ -24,12 +28,16 @@
       {
         "_id": "6dc93890-bf1e-11e9-9cb5-2a2ae2dbcce4",
         "name": "Clients",
-        "display": "HTS Clients"
+        "display": "HTS Clients",
+        "isPatient": true,
+        "rank": 1
       },
       {
         "_id": "6dc939bc-bf1e-11e9-9cb5-2a2ae2dbcce4",
         "name": "HtsTests",
-        "display": "Client Tests"
+        "display": "Client Tests",
+        "isPatient": false,
+        "rank": 2
       }
     ]
   }

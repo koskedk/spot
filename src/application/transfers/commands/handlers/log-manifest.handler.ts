@@ -9,6 +9,7 @@ import {
 } from '../../../../domain';
 import * as uuid from 'uuid';
 import { LogManifestCommand } from '../log-manifest.command';
+import { plainToClass } from 'class-transformer';
 
 @CommandHandler(LogManifestCommand)
 export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
@@ -53,7 +54,7 @@ export class LogManifestHandler implements ICommandHandler<LogManifestCommand> {
     );
 
     if (facility) {
-      return facility;
+      return plainToClass(Facility, facility);
     }
 
     const newFacility = new Facility(

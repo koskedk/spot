@@ -13,11 +13,14 @@ import { LogManifestCommand } from '../log-manifest.command';
 import { LogManifestHandler } from './log-manifest.handler';
 import { TransfersModule } from '../../transfers.module';
 import { CourtsInfrastructureModule } from '../../../../infrastructure/courts';
+import { AssignMasterFacilityCommand } from '../assign-master-facility.command';
+import { AssignMasterFacilityHandler } from './assign-master-facility.handler';
 
-describe('Log Manifest Command Tests', () => {
+describe('Log Assign Master Facility Command Tests', () => {
   let module: TestingModule;
   let commandBus: CommandBus;
-  const { dockets, masterFacilities, facilities } = getTestFacilities();
+  const { dockets, masterfacilities } = getTestStatsData();
+  const { facilities } = getTestFacilities();
   const dbHelper = new TestDbHelper();
   const liveData = facilities[0];
   let facilityRepository: IFacilityRepository;
@@ -33,14 +36,16 @@ describe('Log Manifest Command Tests', () => {
 
     await dbHelper.initConnection();
     await dbHelper.seedDb('dockets', dockets);
-    await dbHelper.seedDb('masterfacilities', masterFacilities);
-    liveData.code = masterFacilities[0].code;
+    await dbHelper.seedDb('masterfacilities', masterfacilities);
+    liveData.code = masterfacilities[0].code;
     await dbHelper.seedDb('facilities', [liveData]);
 
-    const handler = module.get<LogManifestHandler>(LogManifestHandler);
+    const handler = module.get<AssignMasterFacilityHandler>(
+      AssignMasterFacilityHandler,
+    );
     facilityRepository = module.get<IFacilityRepository>('IFacilityRepository');
     commandBus = module.get<CommandBus>(CommandBus);
-    commandBus.bind(handler, LogManifestCommand.name);
+    commandBus.bind(handler, AssignMasterFacilityCommand.name);
   });
 
   afterAll(async () => {
@@ -48,47 +53,16 @@ describe('Log Manifest Command Tests', () => {
     await dbHelper.closeConnection();
   });
 
-  it('should log Manifest-New', async () => {
-    const newFacility = facilities[1];
-    newFacility.code = masterFacilities[1].code;
-    const command = new LogManifestCommand(
-      uuid.v1(),
-      newFacility.code,
-      newFacility.name,
-      dockets[0].name,
-      new Date(),
-      new Date(),
-      100,
-      '',
-    );
-    const result = await commandBus.execute(command);
-    expect(result).not.toBeNull();
-
-    const facility = await facilityRepository.findByCode(newFacility.code);
-    expect(facility).not.toBeNull();
-    expect(facility.manifests.length).toBeGreaterThan(0);
-    Logger.log(facility);
-  });
-
-  it('should log Manifest-Existing', async () => {
+  it('should Assign Master Facility', async () => {
     const existingFacility = facilities[0];
-    existingFacility.code = masterFacilities[0].code;
-    const command = new LogManifestCommand(
-      uuid.v1(),
-      existingFacility.code,
-      existingFacility.name,
-      dockets[0].name,
-      new Date(),
-      new Date(),
-      100,
-      '',
-    );
+    existingFacility.code = masterfacilities[0].code;
+    const command = new AssignMasterFacilityCommand(existingFacility._id);
     const result = await commandBus.execute(command);
     expect(result).not.toBeNull();
 
-    const facility = await facilityRepository.findByCode(existingFacility.code);
+    const facility = await facilityRepository.get(existingFacility._id);
     expect(facility).not.toBeNull();
-    expect(facility.manifests.length).toBeGreaterThan(1);
-    Logger.log(facility);
+    expect(facility.masterFacility).not.toBeNull();
+    Logger.log(facility.masterFacility);
   });
 });

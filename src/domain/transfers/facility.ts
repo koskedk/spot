@@ -24,6 +24,7 @@ export class Facility extends AggregateRoot {
   }
 
   assignMasterFacility(masterFacility: MasterFacility) {
+    this.masterFacility = masterFacility;
     this.apply(new FacilityUpdatedEvent(this._id));
   }
 

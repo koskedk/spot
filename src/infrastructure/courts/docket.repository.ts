@@ -11,9 +11,9 @@ export class DocketRepository extends BaseRepository<Docket>
   }
 
   async findByName(name: string): Promise<Docket> {
-    const docket = await this.getAll({ name });
+    const docket = await this.model.find({ name }).exec();
     if (docket && docket.length > 0) {
-      return docket[0];
+      return docket[0].toObject();
     }
     return undefined;
   }

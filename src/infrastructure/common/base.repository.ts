@@ -61,4 +61,12 @@ export abstract class BaseRepository<T> implements IRepository<T> {
     }
     return false;
   }
+
+  toObjects(documents: any[]) {
+    const objects: any[] = [];
+    if (documents && documents.length > 0) {
+      documents.forEach(d => objects.push(d.toObject()));
+    }
+    return objects;
+  }
 }

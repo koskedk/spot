@@ -35,14 +35,13 @@ describe('Docket Repository  Tests', () => {
     expect(repository).toBeDefined();
   });
 
-  it('should load Dockets', async () => {
-    const dockets = await repository.getAll();
-    expect(dockets.length).toBeGreaterThan(0);
-    const { extracts } = dockets[0];
+  it('should find Dockets By Name', async () => {
+    const docket = await repository.findByName(testDockets[0].name);
+    expect(docket).not.toBeNull();
+    const { extracts } = docket;
     expect(extracts.length).toBeGreaterThan(0);
-    dockets.forEach(d => {
-      Logger.debug(`${d.display}`);
-      d.extracts.map(e => Logger.debug(` >> ${e.display} `));
-    });
+
+    Logger.debug(`${docket.display}`);
+    docket.extracts.map(e => Logger.debug(` >> ${e.display} `));
   });
 });

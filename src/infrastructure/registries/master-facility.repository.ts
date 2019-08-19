@@ -11,9 +11,9 @@ export class MasterFacilityRepository extends BaseRepository<MasterFacility>
   }
 
   async findByCode(code: number): Promise<MasterFacility> {
-    const facilty = await this.getAll({ code });
+    const facilty = await this.model.find({ code }).exec();
     if (facilty && facilty.length > 0) {
-      return facilty[0];
+      return facilty[0].toObject();
     }
     return undefined;
   }

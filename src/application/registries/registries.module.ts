@@ -29,8 +29,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       },
     ]),
     RegistriesInfrastructureModule,
-    TransfersInfrastructureModule,
-    CourtsInfrastructureModule,
   ],
   controllers: [MasterFacilitiesController],
   providers: [

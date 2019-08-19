@@ -5,7 +5,7 @@ export class TestDbHelper {
   const;
   useLocal = true;
   url = `mongodb+srv://livetest:maun@cluster0-v6fcj.mongodb.net/dwapiStatsTest?retryWrites=true&w=majority`;
-  localUrl = `mongodb://192.168.100.3/dwapiStatsTest`;
+  localUrl = `mongodb://localhost/dwapiStatsTest`;
 
   options = {
     useNewUrlParser: true,

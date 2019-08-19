@@ -35,9 +35,9 @@ describe('Facility Repository  Tests', () => {
   });
 
   it('should load Facilities', async () => {
-    const facilities = await repository.getAll();
-    expect(facilities.length).toBeGreaterThan(0);
-    facilities.forEach(d => Logger.debug(`${d.name}`));
+    const data = await repository.getAll();
+    expect(data.length).toBeGreaterThan(0);
+    data.forEach(d => Logger.debug(`${d.name}`));
   });
 
   it('should load By Facility Code', async () => {
