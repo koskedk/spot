@@ -1,11 +1,15 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetSummaryQuery } from '../get-summary.query';
-import { GetDocketsQuery } from '../../../courts/queries';
-import { DocketDto } from '../../../../domain';
+import { IFacilityRepository } from '../../../../domain';
+import { Inject } from '@nestjs/common';
 
 @QueryHandler(GetSummaryQuery)
 export class GetSummaryHandler implements IQueryHandler<GetSummaryQuery, any> {
-  execute(query: GetSummaryQuery): Promise<any> {
-    return undefined;
+  constructor(
+    @Inject('IFacilityRepository')
+    private readonly repository: IFacilityRepository,
+  ) {}
+  async execute(query: GetSummaryQuery): Promise<any> {
+    return await this.repository.get(query._id);
   }
 }

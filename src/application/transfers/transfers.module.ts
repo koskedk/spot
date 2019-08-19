@@ -11,6 +11,8 @@ import { InitializeSummariesHandler } from './commands/handlers/initialize-summa
 import { LogManifestHandler } from './commands/handlers/log-manifest.handler';
 import { RegistriesInfrastructureModule } from '../../infrastructure/registries';
 import { CourtsInfrastructureModule } from '../../infrastructure/courts';
+import { GetStatsHandler } from './queries/handlers/get-stats.handler';
+import { GetSummaryHandler } from './queries/handlers/get-summary.handler';
 
 const CommandHandlers = [
   LogManifestHandler,
@@ -19,7 +21,7 @@ const CommandHandlers = [
   InitializeSummariesHandler,
 ];
 // const EventHandlers = [];
-// const QueryHandlers = [];
+const QueryHandlers = [GetStatsHandler, GetSummaryHandler];
 const Sagas = [FacilityManifestSaga];
 @Module({
   imports: [
@@ -40,6 +42,6 @@ const Sagas = [FacilityManifestSaga];
     CourtsInfrastructureModule,
   ],
   controllers: [ManifestController],
-  providers: [...CommandHandlers],
+  providers: [...CommandHandlers, ...QueryHandlers],
 })
 export class TransfersModule {}
